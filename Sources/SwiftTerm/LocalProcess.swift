@@ -407,6 +407,12 @@ public class LocalProcess {
         io = nil
         childfd = -1
 
+        // Cancel childMonitor before killing process to prevent EV_VANISHED crash
+        #if os(macOS)
+        childMonitor?.cancel()
+        childMonitor = nil
+        #endif
+
         if shellPid != 0 {
             kill(shellPid, SIGTERM)
         }
