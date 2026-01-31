@@ -438,6 +438,12 @@ open class TerminalView: NSView, NSTextInputClient, NSUserInterfaceValidations, 
 
     open override func setFrameSize(_ newSize: NSSize) {
         super.setFrameSize(newSize)
+
+        // Update terminal size when Auto Layout calls setFrameSize
+        if cellDimension != nil {
+            processSizeChange(newSize: newSize)
+        }
+
         setupScroller()
     }
 
